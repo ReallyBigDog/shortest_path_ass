@@ -2,64 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*void print_array_2D(int **arr, int rows, int cols){
-	for (int i=0; i<rows; i++){
-		printf("[");
-		for (int j=0; j<cols; j++)
-			printf("%d ",arr[i][j]);
-		printf("] ");
-	}
-	printf("\n");
-}*/
-
-/*typedef struct{
-    int name;
-}Vertex;*/
-
-typedef struct{
-    int weight;
-    int verts[2];
-}Edge;
-
-typedef struct{
-    int ** matrix;
-}Graph;
-
-
-
-/*struct Node{
-    char * code;
-    int hash;
-    int index;
-};
-
-struct Edge{
-    int weight;
-    struct Node verts[2];
-};
-
-struct Graph{
-    int ** matrix;
-};
-
-struct Graph makeGraph(struct * Node nodes, struct * Edge edges){
-    struct Graph * graph = (struct Graph *)malloc(sizeof(struct Graph));
-    for (int i = 0; i < V; i++){
-
-    }
-}*/
-
-/*void printcodes(char * fname){
-    FILE * f;
-    f = fopen(fname, "r");
-    char line[50];
-    char code[4] = {0};
-    while(fgets(line, sizeof(line), f) != NULL){
-        sscanf(line, "%c%c%c", code[0], code[1], code[2]);
-        printf("%s\n", line);
-    }
-}*/
-
 void airports(char * fname){
     FILE * f;
     char c;
@@ -70,12 +12,6 @@ void airports(char * fname){
         c = fgetc(f);
     }
     fclose(f);
-}
-
-void distance(char * fname, char * departure, char * arrival){
-    /*int dist;
-    char depart
-    while (fscanf(f, "%s %s %d", ))*/
 }
 
 int main(int argc, char ** argv){
@@ -116,7 +52,6 @@ int main(int argc, char ** argv){
     while(fscanf(g, "%s %s %d", start, end, &distance) != EOF){
         hash_start = dir[start[0] - 'A'][start[1] - 'A'][start[2] - 'A'];
         hash_end = dir[end[0] - 'A'][end[1] - 'A'][end[2] - 'A'];
-        //printf("%d, %d, %d\n", hash_start, hash_end, distance);
         matrix[hash_start][hash_end] = distance;
         matrix[hash_end][hash_start] = distance;
         edges[count][0] = hash_start;
@@ -131,51 +66,6 @@ int main(int argc, char ** argv){
         edge_list[i + count][0] = edges[i][1];
         edge_list[i + count][1] = edges[i][0];
     }
-
-    //printing matrix
-    /*for (int i=0; i<V; i++){
-		printf("[");
-		for (int j=0; j<V; j++)
-			printf("%d ",matrix[i][j]);
-		printf("]\n");
-	}
-	printf("\n");return 0;*/
-
-    //printf("%d\n", dir['S'-'A']['F'-'A']['O'-'A']);
-    /*int i = 0;
-    int cur;
-    while ((cur = fgetc(f)) != EOF){
-        //cur = fgetc(f);
-        char code[3];
-        if (i < 3){
-            i++;
-            code[i] = cur;
-            if (i == 3){
-                //need to hash here
-                printf("%s", code);
-                V++;
-            }
-        }
-    }*/
-    /*char line[50];
-    char code[3] = {0};
-    while(fgets(line, sizeof(line), f) != NULL){
-        sscanf(line, "%c%c%c\n", &code[0], &code[1], &code[2]);
-        printf("%s\n", line);
-        V++;
-    }*/
-    /*char buffer[1024], *p;
-    if(fgets(buffer, sizeof(buffer), f)){
-        if ((p = strchr(buffer, " "))){
-            *p = '\0';
-        }
-        for (p = buffer; (* p); p++){
-            char c = *p;
-            printf("%c\n", c);
-        }
-    }*/
-
-
 
     while(1){
         char command[50];
@@ -217,9 +107,7 @@ int main(int argc, char ** argv){
 
                     if (dist[src] + w < dist[dest]){
                         dist[dest] = dist[src] + w;
-                        //printf("%d\n", dist[6]);
                         last[dest] = src;
-                        //printf("%d, %d\n", src, dest);
                     }
                 }
             }
@@ -232,7 +120,6 @@ int main(int argc, char ** argv){
             while (backtrack != depart_hash){
                 path[legs] = backtrack;
                 backtrack = last[backtrack];
-                //printf("%d\n", path[legs]);
                 legs++;
             }
             int for_path[legs + 1];
@@ -247,12 +134,10 @@ int main(int argc, char ** argv){
             char s[3];
             for (int i = 0; i < legs; i++){
                 leave[0] = inv_dir[for_path[i]]/10000;
-                //printf("%d %d\n", leave[0], i);
                 leave[1] = inv_dir[for_path[i]]/100 - 100*leave[0];
                 leave[2] = inv_dir[for_path[i]] - 10000*leave[0] - 100*leave[1];
 
                 stop[0] = inv_dir[for_path[i+1]]/10000;
-                //printf("%d %d\n", stop[0], i);
                 stop[1] = inv_dir[for_path[i+1]]/100 - 100*stop[0];
                 stop[2] = inv_dir[for_path[i+1]] - 10000*stop[0] - 100*stop[1];
 
@@ -263,13 +148,6 @@ int main(int argc, char ** argv){
 
                 printf("%s -> %c%c%c %d\n", l, s[0], s[1], s[2], matrix[for_path[i]][for_path[i+1]]);
             }
-            //printf("%d %d\n", last[0], last[last[0]]);
-            //print print last until we get to depart
-            //then unhash and organize neatly
-
-            //passes graph, depart, arrive
-            //then finds shortest path
-            //distance(argv[2], depart, arrive);
         }
         else{
             printf("Invalid command, type help for info\n");
